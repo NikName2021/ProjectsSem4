@@ -7,7 +7,12 @@ Quantity::Quantity(double valSI, Dimension d) : valueSI(valSI), dim(d) {}
 Quantity Quantity::fromUnit(double value, const Unit& unit) {
     return Quantity(value * unit.getFactor(), unit.getDimension());
 }
-
+Quantity Quantity::operator-(const Quantity& other) const {
+    if (dim != other.dim) {
+        throw std::runtime_error("Physical Error: Dimension mismatch in subtraction!");
+    }
+    return Quantity(valueSI - other.valueSI, dim);
+}
 Quantity Quantity::operator+(const Quantity& other) const {
     if (dim != other.dim) throw std::runtime_error("Physical Error: Different dimensions!");
     return Quantity(valueSI + other.valueSI, dim);
@@ -23,9 +28,9 @@ Quantity Quantity::operator/(const Quantity& other) const {
 }
 
 void Quantity::printSI() const {
-    std::cout << valueSI << " (SI units: ";
+    std::cout << valueSI << " ";
     dim.print();
-    std::cout << ")" << std::endl;
+    std::cout << std::endl;
 }
 
 void Quantity::printAs(const Unit& unit) const {

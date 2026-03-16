@@ -11,4 +11,5 @@ add_executable(calc
         src/Dimension.cpp
         src/Unit.cpp
         src/Quantity.cpp
+        src/Parser.cpp
 )

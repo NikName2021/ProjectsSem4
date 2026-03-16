@@ -18,7 +18,22 @@ Dimension Dimension::operator+(const Dimension& other) const {
 Dimension Dimension::operator-(const Dimension& other) const {
     return Dimension(m - other.m, l - other.l, t - other.t);
 }
-
 void Dimension::print() const {
-    std::cout << "M^" << m << " L^" << l << " T^" << t;
+    bool first = true;
+
+    auto printUnit = [&](int power, std::string symbol) {
+        if (power == 0) return;
+
+        if (!first) std::cout << "*";
+        std::cout << symbol;
+        if (power != 1) std::cout << "^" << power;
+
+        first = false;
+    };
+
+    printUnit(m, "kg");
+    printUnit(l, "m");
+    printUnit(t, "s");
+
+    if (first) std::cout << "1";
 }
